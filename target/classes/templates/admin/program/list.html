@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý Chương trình</title>
+
+</head>
+
+<body>
+
+	<div class="container mt-4">
+		<th:block>
+			<h2 class="mb-4">📂 Quản lý chương trình </h2>
+
+			<!-- Search  -->
+			<form th:action="@{/admin/programs/search/}" method="post" class="row g-2 mb-3">
+				<div class="col-md-4">
+					<input type="text" name="keyword" class="form-control" placeholder="Tìm theo tên danh mục..."
+						th:value="${keyword}">
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary w-100">Tìm kiếm</button>
+				</div>
+				<div class="col-md-6 text-end">
+					<a th:href="@{/admin/programs/create}" class="btn btn-success">
+						➕ Thêm mới
+					</a>
+				</div>
+			</form>
+
+			<!-- Table -->
+			<form th:action="@{/admin/programs/delete}" method="post"
+				onsubmit="return confirm('Bạn chắc chắn muốn xóa các chương trình đã chọn?')">
+				<table class="table table-bordered table-hover align-middle">
+					<thead class="table-dark">
+						<tr>
+							<th>ID</th>
+							<th>Danh mục</th>
+							<th>Tiêu đề</th>
+							<th>Ảnh Thumnail</th>
+							<th>Quốc gia</th>
+							<th>Công việc</th>
+							<th>Lương</th>
+							<th>Thời hạn HĐ</th>
+							<th>Độ tuổi</th>
+							<th>Giới tính</th>
+							<th>Học vấn</th>
+							<th>Ngôn ngữ</th>
+							<th>Kinh nghiệm</th>
+							<th>Số lượng</th>
+							<th>Chi phí</th>
+							<th>Ngày phỏng vấn</th>
+							<th>Ngày đi làm</th>
+							<th>Trạng thái</th>
+							<th>
+								<input type="checkbox" id="chkAll" />
+							</th>
+							<th width="140">Hành động</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p : ${programs}">
+							<td th:text="${p.id}"></td>
+							<td th:text="${p.category.name}"></td>
+							<td th:text="${p.title}"></td>
+							<td>
+								<img th:src="${thumbnails != null and thumbnails[p.id] != null ? thumbnails[p.id] : '/images/no-image.png'}"
+									width="80" height="60" style="object-fit:cover; border-radius:6px;" />
+
+							</td>
+							<td th:text="${p.country}"></td>
+							<td th:text="${p.jobName}"></td>
+
+							<td>
+								<span th:text="${#numbers.formatDecimal(p.salary, 0, 'COMMA', 0, 'POINT')}"></span>
+								<span th:text="${p.currency}"></span>
+							</td>
+
+							<td th:text="${p.contractYears + ' năm'}"></td>
+
+							<td>
+								<span th:text="${p.ageMin}"></span> -
+								<span th:text="${p.ageMax}"></span>
+							</td>
+
+							<td th:text="${p.gender}"></td>
+							<td th:text="${p.educationRequired}"></td>
+							<td th:text="${p.languageRequired}"></td>
+							<td th:text="${p.experienceRequired}"></td>
+							<td th:text="${p.quantity}"></td>
+
+							<td>
+								<span th:text="${#numbers.formatDecimal(p.cost, 0, 'COMMA', 0, 'POINT')}"></span>
+								<span>VND</span>
+							</td>
+
+							<td th:text="${#temporals.format(p.interviewDate, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#temporals.format(p.startWorkDate, 'dd/MM/yyyy')}"></td>
+
+							<td>
+								<span th:if="${p.status == 'ACTIVE'}" class="badge bg-success">Hoạt động</span>
+								<span th:if="${p.status != 'ACTIVE'}" class="badge bg-secondary">Ẩn</span>
+							</td>
+							<td><input type="checkbox" class="checkID" th:value="${p.id}" name="lid" /></td>
+							<td>
+								<a th:href="@{'/admin/programs/edit/' + ${p.id}}" class="btn btn-sm btn-warning">Sửa</a>
+								<a th:href="@{'/admin/programs/delete/' + ${p.id}}"
+									onclick="return confirm('Xóa danh mục này?')" class="btn btn-sm btn-danger">Xóa</a>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+				<!--Total Items:[[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]] Pages <span
+					th:each="i:${#numbers.sequence(1,totalPages)}"> <a th:if="${i != currentPage}"
+						th:href="@{/admin/programs/{page}(page=${i}, keyword=${keyword})}"> [[${i}]] </a> <span
+						th:unless="${i!=currentPage}">[[${i}]]</span>&nbsp;&nbsp; </span>-->
+				<div class="mt-4" th:if="${totalPages > 0}">
+
+					<!--<div class="text-center mb-2">
+						Total Items:
+						<strong>[[${totalItems}]]</strong>
+						-
+						Page
+						<strong>[[${currentPage}]]</strong>
+						of
+						<strong>[[${totalPages}]]</strong>
+						Pages
+					</div>-->
+
+					<nav>
+						<ul class="pagination justify-content-center mb-0">
+
+							<!-- VỀ TRANG ĐẦU -->
+							<li class="page-item" th:classappend="${currentPage == 1} ? ' disabled'">
+
+								<a class="page-link" th:if="${currentPage > 1}"
+									th:href="@{/admin/programs/{page}(page=1, keyword=${keyword})}">
+									«
+								</a>
+
+								<span class="page-link" th:if="${currentPage == 1}">
+									«
+								</span>
+							</li>
+
+							<!-- SỐ TRANG -->
+							<li class="page-item" th:each="i:${#numbers.sequence(1,totalPages)}"
+								th:classappend="${i == currentPage} ? ' active'">
+
+								<a class="page-link" th:if="${i != currentPage}"
+									th:href="@{/admin/programs/{page}(page=${i}, keyword=${keyword})}">
+									[[${i}]]
+								</a>
+
+								<span class="page-link" th:unless="${i!=currentPage}">
+									[[${i}]]
+								</span>
+							</li>
+
+							<!-- VỀ TRANG CUỐI -->
+							<li class="page-item" th:classappend="${currentPage == totalPages} ? ' disabled'">
+
+								<a class="page-link" th:if="${currentPage < totalPages}"
+									th:href="@{/admin/programs/{page}(page=${totalPages}, keyword=${keyword})}">
+									»
+								</a>
+
+								<span class="page-link" th:if="${currentPage == totalPages}">
+									»
+								</span>
+							</li>
+
+						</ul>
+					</nav>
+
+				</div>
+				<button type="submit" class="btn btn-primary">
+					XÓA CÁC CHƯƠNG TRÌNH ĐÃ CHỌN
+				</button>
+				<a th:onclick="if(!(confirm('Are you sure you want to delete all programS ?') )) return false"
+					th:href="@{/admin/programs/deleteAll}" class="btn btn-primary">XÓA HẾT CHUONG TRÌNH </a>
+				<a th:href="@{/admin/programs/create}" class="btn btn-primary">THÊM CHƯƠNG TRÌNH</a>
+			</form>
+		</th:block>
+
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/public/layout::publiclayout(~{::th:block})}">
+
+<body>
+	<th:block>
+
+
+		<div class="mcontent">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-sm-9 bmain">
+
+						<div class="lhp">
+							<div class="wpb_wrapper">
+								<h4>Thông tin liên hệ</h4>
+								<div class="hr-thin"></div>
+							</div>
+							<div class="contact-wrapper">
+								<div th:if="${param.success}" class="alert alert-success">
+									Gửi liên hệ thành công! Chúng tôi sẽ liên hệ với bạn sớm.
+								</div>
+
+								<form th:action="@{/contact}" th:object="${contact}" id="contact_form"
+									name="contact_form" method="post">
+
+									<div class="mb-5">
+										<label>Họ Tên</label>
+										<input type="text" required maxlength="100" class="form-control"
+											placeholder="Nhập họ tên" th:field="*{fullName}">
+									</div>
+									<div class="mb-5">
+										<label>Email</label>
+										<input type="email" required maxlength="100" class="form-control"
+											placeholder="name@example.com" th:field="*{email}">
+									</div>
+
+									<div class="mb-5">
+										<label>Phone</label>
+										<input type="tel" required maxlength="100" class="form-control"
+											placeholder="Số điện thoại" th:field="*{phone}">
+									</div>
+
+									<div class="mb-5">
+										<label>Tiêu đề</label>
+										<input type="text" required maxlength="100" class="form-control"
+											placeholder="tiêu đề" th:field="*{title}">
+									</div>
+									<div class="mb-5">
+										<label>Nội dung</label>
+										<textarea class="form-control" rows="5" th:field="*{message}"
+											placeholder="Nhập nội dung liên hệ"></textarea>
+									</div>
+
+									<button type="submit" class="btn btn-primary px-4 btn-lg">
+										Gửi liên hệ
+									</button>
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-sm-3 bright">
+						<aside class="sidebar sidebar-primary">
+
+							<section id="list_posts-3" class="widget widget_list_posts">
+								<div class="blava">
+									<div class="haeq">
+										<p class="widget-titlea">Tin mới nhất</p>
+									</div>
+									<div class="blava1">
+										<ul class="list-post-item">
+											<li class="itnw">
+												<p><a href="#">Bài viết 1</a></p>
+											</li>
+											<li class="itnw">
+												<p><a href="#">Bài viết 2</a></p>
+											</li>
+											<li class="itnw">
+												<p><a href="#">Bài viết 3</a></p>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</section>
+
+							<section id="tvonl" class="widget">
+								<div class="hdaa">Hotline tư vấn</div>
+								<div class="contat">
+									<p style="margin:0 0 7.5pt;">
+										<span style="font-family:georgia,serif;">
+											<strong>
+												<span style="font-size:24px;">
+													0979 023 886
+												</span>
+											</strong>
+										</span>
+									</p>
+								</div>
+							</section>
+
+						</aside>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</th:block>
+</body>
+
+</html>

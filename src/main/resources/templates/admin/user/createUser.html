@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<body>
+	<th:block>
+		<div class="container-fluid mt-3">
+	<h2>User Information </h2>
+	<div class="row error" id="err-message">
+		<th:block th:if="${msg}">
+							<p class="text-center fs-4 text-success" th:text="${msg}"></p>
+						</th:block>
+	</div>
+
+	<form action="#" th:action="@{/admin/user/create}" th:object="${myUser}" id="UserForm" method="POST">
+	<div class="row">
+          <div class="col">
+				<input type="hidden" class="form-control mb-4" th:field="*{id}" placeholder="Enter ID" name="Id">
+			</div>
+        </div>
+		<div class=" row">
+			<div class="col">
+				<label for="fullName" class="form-label">Full Name :</label>
+			</div>
+			<div class="col">
+				<input type="text" id="fullName" class="form-control mb-4" th:field="*{fullName}"
+					placeholder="Enter FullName" name="FullName">
+			</div>
+		</div>
+		<div class=" row">
+			<div class="col">
+				<label for="UserName" class="form-label">User Name :</label>
+			</div>
+			<div class="col">
+				<input type="text" id="username" class="form-control mb-4" th:field="*{username}"
+					placeholder="Enter Username" name="username">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<label for="email" class="form-label">Email:</label>
+			</div>
+			<div class="col">
+				<input type="email" id="email" class="form-control mb-4" th:field="*{email}" placeholder="Enter Email"
+					name="email">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<label for="mobileNumber" class="form-label">Mobile Number:</label>
+			</div>
+			<div class="col">
+				<input type="number" id="mobileNumber" class="form-control mb-4" th:field="*{mobileNumber}" placeholder="Enter Mobile Number"
+					name="mobileNumber">
+			</div>
+		</div>
+		
+		<div class="row">
+  
+			<div class="col">
+				<label for="password" class="form-label">Password :</label>
+			</div>
+			<div class="col">
+				<input type="password" id="password" class="form-control mb-4" th:field="*{password}"
+					placeholder="Enter Password" name="password">
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="col">
+
+				<label class="form-check-label">ROLE :</label>
+			</div>
+			<div class="col">
+				<input type="radio" class="form-check-input" id="roleuser" name="role" value="ROLE_USER" th:field="*{role}"
+					checked>ROLE_USER
+				<input type="radio" class="form-check-input" id="roleadmin" name="role" value="ROLE_ADMIN" th:field="*{role}"
+					>ROLE_ADMIN
+			</div>
+		</div>
+		<div class="row">
+			<input type="submit" class="btn btn-primary" value="SAVE" />
+		</div>
+	</form>
+</div>
+	</th:block>
+</body>
+
+</html>

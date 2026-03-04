@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="admin/layout::adminlayout(~{::th:block})">
+
+<body>
+<th:block>
+
+    <div style="width: 70%; margin: auto;">
+        <h2 class="mb-4 text-center">Thêm / Cập nhật danh mục</h2>
+
+        <form th:action="@{/admin/categories/save}"
+              th:object="${category}"
+              method="post"
+              novalidate>
+
+            <!-- ID hidden (dùng khi update) -->
+            <input type="hidden" th:field="*{id}">
+
+            <!-- Tên danh mục -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-3 col-form-label">Tên danh mục</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:field="*{name}"
+                           placeholder="Nhập tên danh mục"
+                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''">
+
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loại -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-3 col-form-label">Loại</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:field="*{type}"
+                           placeholder="Ví dụ: program, post"
+                           th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''">
+
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('type')}"
+                         th:errors="*{type}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trạng thái -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-3 col-form-label">Trạng thái</label>
+                <div class="col-sm-9">
+                    <select class="form-control"
+                            th:field="*{status}"
+                            th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' : ''">
+                        <option value="">-- Chọn trạng thái --</option>
+                        <option value="ACTIVE">Hoạt động</option>
+                        <option value="INACTIVE">Tạm ẩn</option>
+                    </select>
+
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('status')}"
+                         th:errors="*{status}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mô tả -->
+            <div class="form-group row mb-4">
+                <label class="col-sm-3 col-form-label">Mô tả</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control"
+                              th:field="*{description}"
+                              rows="3"
+                              placeholder="Nhập mô tả danh mục"
+                              th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('description')}"
+                         th:errors="*{description}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
+                    <button type="submit" class="btn btn-primary">
+                        💾 Lưu danh mục
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</th:block>
+</body>
+</html>

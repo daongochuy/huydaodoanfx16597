@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/public/layout::publiclayout(~{::content})}">
+
+<body>
+	<th:block th:fragment="content">
+		<div id="cat10515" class="tab-pane fade active in">
+
+
+
+			<div class="row">
+
+				<div class="col-xs-6 col20" th:each="program : ${programs}">
+
+					<div class="blav">
+
+						<a class="imgla" th:href="@{/program/{id}(id=${program.id})}" th:title="${program.title}">
+							<img class="img-project" th:src="${thumbnails[program.id]}" th:alt="${program.title}"
+								width="200px" height="150px">
+						</a>
+
+						<a class="ttae" th:href="@{/programs/{id}(id=${program.id})}" th:title="${program.title}"
+							th:text="${program.title}">
+						</a>
+
+						<div class="dsl">
+							Số lượng:
+							<span th:text="${program.quantity}"></span>
+						</div>
+
+						<div class="dng">
+							Lương:
+							<span th:text="${program.salary}"></span>
+						</div>
+
+
+
+
+						<div class="dtt">
+							Trạng thái:
+							<span th:if="${program.status == 'OPEN'}">Đang tuyển</span>
+							<span th:if="${program.status == 'CLOSED'}">Đã đóng đơn</span>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="row mt-4" th:if="${totalPages > 0}">
+
+					<div class="col-12 text-center mb-2">
+						Tổng: <strong th:text="${totalItems}"></strong> |
+						Trang <strong th:text="${currentPage}"></strong>
+						/ <strong th:text="${totalPages}"></strong>
+					</div>
+
+					<div class="mt-4 text-center" th:if="${totalPages > 0}">
+
+						<ul class="pagination justify-content-center mb-0">
+
+							<!-- PREVIOUS -->
+							<li class="page-item" th:classappend="${currentPage == 1} ? ' disabled'">
+
+								<a class="page-link" th:if="${currentPage > 1}"
+									th:href="@{/categories/{id}(id=${categoryId}, page=${currentPage - 1})}">
+									Previous
+								</a>
+
+								<span class="page-link" th:if="${currentPage == 1}">
+									Previous
+								</span>
+							</li>
+
+							<!-- PAGE NUMBERS -->
+							<li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+								th:classappend="${i == currentPage} ? ' active'">
+
+								<a class="page-link" th:if="${i != currentPage}"
+									th:href="@{/categories/{id}(id=${categoryId}, page=${i})}" th:text="${i}">
+								</a>
+
+								<span class="page-link" th:if="${i == currentPage}" th:text="${i}">
+								</span>
+							</li>
+
+							<!-- NEXT -->
+							<li class="page-item" th:classappend="${currentPage == totalPages} ? ' disabled'">
+
+								<a class="page-link" th:if="${currentPage < totalPages}"
+									th:href="@{/categories/{id}(id=${categoryId}, page=${currentPage + 1})}">
+									Next
+								</a>
+
+								<span class="page-link" th:if="${currentPage == totalPages}">
+									Next
+								</span>
+							</li>
+
+						</ul>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		</div>
+
+	</th:block>
+</body>
+
+</html>

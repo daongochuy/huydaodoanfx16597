@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/public/layout::publiclayout(~{::th:block})}">
+
+<body>
+	<th:block>
+		
+		<div class="mcontent">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-sm-9 bmain">
+						
+
+						<div class="lhp">
+
+							<div class="wpb_wrapper">
+								<h4>Thông tin liên hệ</h4>
+								<div class="hr-thin"></div>
+							</div>
+
+							
+
+							<div>
+								<p class="error-message"></p>
+
+								<div class="wpcf7-form">
+									<div class="row">
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Họ tên (*)</label><br>
+												<span class="wpcf7-form-control-wrap ho-va-ten">
+													<input type="text" id="txtname"
+														class="wpcf7-form-control wpcf7-text" placeholder="Họ và tên" />
+												</span>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Email (*)</label><br>
+												<span class="wpcf7-form-control-wrap email-cua-ban">
+													<input type="text" id="txtemail"
+														class="wpcf7-form-control wpcf7-text" placeholder="Email" />
+												</span>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Điện thoại (*)</label><br>
+												<span class="wpcf7-form-control-wrap dien-thoai">
+													<input type="text" id="txtphone"
+														class="wpcf7-form-control wpcf7-text" />
+												</span>
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>Tiêu đề</label><br>
+												<span class="wpcf7-form-control-wrap tieu-de">
+													<input type="text" id="txttitle"
+														class="wpcf7-form-control wpcf7-text" placeholder="Tiêu đề" />
+												</span>
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>Nội dung</label><br>
+												<span class="wpcf7-form-control-wrap noi-dung">
+													<textarea id="txtcontent" rows="5"
+														class="wpcf7-form-control wpcf7-textarea"
+														placeholder="Nội dung"></textarea>
+												</span>
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="form-group">
+												<input type="button" value="Gửi liên hệ" id="btnsend"
+													class="wpcf7-form-control wpcf7-submit" />
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							
+
+						</div>
+					</div>
+
+					
+
+					<div class="col-sm-3 bright">
+						<aside class="sidebar sidebar-primary">
+
+							<section id="list_posts-3" class="widget widget_list_posts">
+								<div class="blava">
+									<div class="haeq">
+										<p class="widget-titlea">Tin mới nhất</p>
+									</div>
+									<div class="blava1">
+										<ul class="list-post-item">
+											<li class="itnw">
+												<p><a href="#">Bài viết 1</a></p>
+											</li>
+											<li class="itnw">
+												<p><a href="#">Bài viết 2</a></p>
+											</li>
+											<li class="itnw">
+												<p><a href="#">Bài viết 3</a></p>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</section>
+
+							<section id="tvonl" class="widget">
+								<div class="hdaa">Hotline tư vấn</div>
+								<div class="contat">
+									<p style="margin:0 0 7.5pt;">
+										<span style="font-family:georgia,serif;">
+											<strong><span style="font-size:24px;">0979 023 886</span></strong>
+										</span>
+									</p>
+								</div>
+							</section>
+
+						</aside>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</th:block>
+</body>
+
+</html>

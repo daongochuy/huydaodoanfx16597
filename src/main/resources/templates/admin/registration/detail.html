@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<body>
+	<th:block>
+		<h3 class="mb-3">📄 Chi tiết đăng ký</h3>
+
+		<div class="card p-4">
+			<div th:if="${param.success}" class="alert alert-success">
+				Cập nhật trạng thái thành công! .
+			</div>
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<strong>Chương trình:</strong>
+					<span th:text="${registration.program.title}"></span>
+				</div>
+				<div class="col-md-6">
+					<strong>Số lượng còn lại:</strong>
+					<span th:text="${registration.program.quantity}"></span>
+				</div>
+			</div>
+
+			<hr />
+
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<strong>Họ tên:</strong>
+					<span th:text="${registration.member.fullName}"></span>
+				</div>
+				<div class="col-md-6">
+					<strong>Email:</strong>
+					<span th:text="${registration.member.email}"></span>
+				</div>
+			</div>
+
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<strong>Điện thoại:</strong>
+					<span th:text="${registration.member.phone}"></span>
+				</div>
+				<div class="col-md-6">
+					<strong>Trình độ:</strong>
+					<span th:text="${registration.member.educationLevel}"></span>
+				</div>
+			</div>
+
+			<hr />
+
+			<form th:action="@{/admin/registration/update-status}" method="post">
+
+				<input type="hidden" name="id" th:value="${registration.id}" />
+
+				<div class="mb-3">
+					<label class="form-label">Cập nhật trạng thái</label>
+
+					<select name="status" class="form-select">
+						<option value="PENDING " th:selected="${registration.status == 'PENDING'}">
+							Mới gửi
+						</option>
+						<option value="PROCESSING" th:selected="${registration.status == 'PROCESSING'}">
+							Đang xét
+						</option>
+
+						<option value="APPROVED" th:selected="${registration.status == 'APPROVED'}">
+							Duyệt
+						</option>
+
+						<option value="REJECTED" th:selected="${registration.status == 'REJECTED'}">
+							Từ chối
+						</option>
+
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Ghi chú nội bộ</label>
+					<textarea name="note" class="form-control" th:text="${registration.note}"></textarea>
+				</div>
+
+				<button type="submit" class="btn btn-success">
+					Cập nhật
+				</button>
+
+				<a th:href="@{/admin/registration}" class="btn btn-secondary">
+					Quay lại
+				</a>
+
+			</form>
+
+		</div>
+	</th:block>
+</body>
+
+</html>

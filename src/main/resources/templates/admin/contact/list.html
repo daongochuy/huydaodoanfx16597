@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout::adminlayout(~{::th:block})">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý Liên Hệ</title>
+
+</head>
+
+<body>
+
+	<div class="container mt-4">
+		<th:block>
+			<h2 class="mb-4">📂 Quản lý liên hệ</h2>
+
+			<!-- Search 
+    <form th:action="@{/admin/categories}" method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <input type="text" name="keyword" class="form-control"
+                   placeholder="Tìm theo tên danh mục..."
+                   th:value="${keyword}">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">Tìm kiếm</button>
+        </div>
+        <div class="col-md-6 text-end">
+            <a th:href="@{/admin/categories/create}" class="btn btn-success">
+                ➕ Thêm mới
+            </a>
+        </div>
+    </form>
+      -->
+			<!-- Table -->
+			<table class="table table-bordered table-hover align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Tiêu đề</th>
+						<th>Nội Dung</th>
+						<th>Họ và tên</th>
+						<th>Email</th>
+						<th>Điện thoại</th>
+						<th>Ngày gửi</th>
+						<th>Trạng thái</th>
+						<th width="160">Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${contacts}">
+						<td th:text="${c.id}"></td>
+						<td th:text="${c.title}"></td>
+						<td th:text="${c.message}"></td>
+						<td th:text="${c.fullName}"></td>
+						<td th:text="${c.email}"></td>
+						<td th:text="${c.phone}"></td>
+						<td th:text="${c.createdAt}"></td>
+						<td>
+							<span th:if="${c.status == 'NEW'}" class="badge bg-success">Mới gửi</span>
+							<span th:if="${c.status == 'PENDING'}" class="badge bg-secondary">Chưa xử lý</span>
+							<span th:if="${c.status == 'PROCESSING'}" class="badge bg-secondary">Đang xử lý</span>
+							<span th:if="${c.status == 'REPLIED'}" class="badge bg-secondary">Đã xử lý</span>
+						</td>
+						<td>
+							<a th:href="@{'/admin/contacts/detail/' + ${c.id}}" class="btn btn-sm btn-warning">Xem và xử lý</a>
+							<a th:href="@{'/admin/contacts/delete/' + ${c.id}}"
+								onclick="return confirm('Xóa liên hệc này?')" class="btn btn-sm btn-danger">Xóa</a>
+						</td>
+					</tr>
+					
+				<tr th:if="${contacts.content.size() == 0}">
+					<td colspan="5" class="text-center text-muted">Không có dữ liệu</td>
+				</tr>
+				
+				</tbody>
+			</table>
+			Total Items:[[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]] Pages
+			<span th:each="i:${#numbers.sequence(1,totalPages)}">
+				<a th:if="${i!=currentPage}" th:href="@{'/admin/contacts/'+${i}}">[[${i}]]</a>&nbsp;&nbsp;
+				<span th:unless="${i!=currentPage}">[[${i}]]</span>&nbsp;&nbsp;
+			</span>
+			
+			
+		</th:block>
+
+	</div>
+</body>
+
+</html>

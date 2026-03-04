@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="admin/layout::adminlayout(~{::th:block})">
+
+<body>
+<th:block>
+
+<h3>Sửa ảnh chương trình</h3>
+
+<form th:action="@{/admin/program-images/update}"
+      method="post"
+      th:object="${programImage}"
+      enctype="multipart/form-data">
+
+    <!-- ID Ẩn -->
+    <input type="hidden" th:field="*{id}" />
+
+    <!-- Khung hiển thị ảnh -->
+    <div class="mb-3">
+        <label class="form-label">Ảnh</label><br>
+
+        <div style="width:250px; height:180px; border:2px dashed #ccc; 
+                    display:flex; align-items:center; justify-content:center;
+                    overflow:hidden; border-radius:8px; background:#fafafa;">
+
+            <!-- Ảnh preview -->
+            <img id="imagePreview"
+                 th:if="${programImage.imageUrl != null}"
+                 th:src="@{${programImage.imageUrl}}"
+                 style="max-width:100%; max-height:100%;" />
+
+            <!-- Placeholder nếu chưa có ảnh -->
+            <span id="placeholderText"
+                  th:if="${programImage.imageUrl == null}"
+                  style="color:#999;">
+                Chưa có ảnh
+            </span>
+
+        </div>
+    </div>
+
+    <!-- Chọn ảnh mới -->
+    <div class="mb-3">
+        <label class="form-label">Chọn ảnh mới (nếu muốn thay)</label>
+        <input type="file"
+               name="imagefile"
+               class="form-control"
+               accept="image/*"
+               onchange="previewImage(event)">
+    </div>
+
+    <!-- Chọn chương trình -->
+    <div class="mb-3 col-md-6">
+        <label class="form-label">Chọn chương trình</label>
+        <select th:field="*{program.id}"
+                class="form-select"
+                required>
+
+            <option value="">-- Chọn chương trình --</option>
+
+            <option th:each="p : ${programs}"
+                    th:value="${p.id}"
+                    th:text="${p.title}">
+            </option>
+
+        </select>
+    </div>
+
+    <!-- Thumbnail -->
+    <div class="mb-3 form-check">
+        <input type="checkbox"
+               class="form-check-input"
+               th:field="*{isThumbnail}" />
+        <label class="form-check-label">
+            Đặt làm ảnh đại diện (thumbnail)
+        </label>
+    </div>
+
+    <!-- Nút -->
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">
+            Cập nhật
+        </button>
+
+        <a th:href="@{/admin/program-images/list}"
+           class="btn btn-secondary">
+            Hủy
+        </a>
+    </div>
+
+</form>
+
+<!-- Script preview ảnh -->
+<script>
+function previewImage(event) {
+    const preview = document.getElementById("imagePreview");
+    const placeholder = document.getElementById("placeholderText");
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+
+            // Nếu chưa có img (trường hợp create hoặc null)
+            if (!preview) {
+                const img = document.createElement("img");
+                img.id = "imagePreview";
+                img.style.maxWidth = "100%";
+                img.style.maxHeight = "100%";
+                document.querySelector(".mb-3 div").appendChild(img);
+                img.src = e.target.result;
+            } else {
+                preview.src = e.target.result;
+            }
+
+            if (placeholder) {
+                placeholder.style.display = "none";
+            }
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+
+</th:block>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout::adminlayout(~{::th:block})">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý danh mục</title>
+
+</head>
+
+<body>
+
+	<div class="container mt-4">
+		<th:block>
+			<h2 class="mb-4">📂 Quản lý danh mục (Categories)</h2>
+
+			<!-- Search 
+    <form th:action="@{/admin/categories}" method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <input type="text" name="keyword" class="form-control"
+                   placeholder="Tìm theo tên danh mục..."
+                   th:value="${keyword}">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">Tìm kiếm</button>
+        </div>
+        <div class="col-md-6 text-end">
+            <a th:href="@{/admin/categories/create}" class="btn btn-success">
+                ➕ Thêm mới
+            </a>
+        </div>
+    </form>
+      -->
+			<!-- Table -->
+			<table class="table table-bordered table-hover align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Tên danh mục</th>
+						<th>Loại</th>
+						<th>Chi tiết</th>
+						<th>Trạng thái</th>
+						<th width="160">Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${categories}">
+						<td th:text="${c.id}"></td>
+						<td th:text="${c.name}"></td>
+						<td>
+							<span th:switch="${c.type}">
+								<span th:case="'du_hoc'">Du học</span>
+								<span th:case="'xuat_khau_lao_dong'">Xuất khẩu lao động</span>
+								<span th:case="'ky_su'">Kỹ sư</span>
+								<span th:case="'khoa_hoc'">Khóa học</span>
+								<span th:case="*">Không xác định</span>
+							</span>
+						</td>
+						<td th:text="${c.description}"></td>
+						<td>
+							<span th:if="${c.status == 'ACTIVE'}" class="badge bg-success">Hoạt động</span>
+							<span th:if="${c.status != 'ACTIVE'}" class="badge bg-secondary">Ẩn</span>
+						</td>
+						<td>
+							<a th:href="@{'/admin/categories/edit/' + ${c.id}}" class="btn btn-sm btn-warning">Sửa</a>
+							<a th:href="@{'/admin/categories/delete/' + ${c.id}}"
+								onclick="return confirm('Xóa danh mục này?')" class="btn btn-sm btn-danger">Xóa</a>
+						</td>
+					</tr>
+
+					<tr th:if="${categories.content.size() == 0}">
+						<td colspan="5" class="text-center text-muted">Không có dữ liệu</td>
+					</tr>
+
+				</tbody>
+			</table>
+			Total Items:[[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]] Pages
+			<span th:each="i:${#numbers.sequence(1,totalPages)}">
+				<a th:if="${i!=currentPage}" th:href="@{'/admin/categories/'+${i}}">[[${i}]]</a>&nbsp;&nbsp;
+				<span th:unless="${i!=currentPage}">[[${i}]]</span>&nbsp;&nbsp;
+			</span>
+			<a th:href="@{/admin/categories/create}" class="btn btn-primary">THÊM DANH MỤC</a>
+
+		</th:block>
+
+	</div>
+</body>
+
+</html>

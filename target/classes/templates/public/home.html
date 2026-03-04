@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/public/layout::publiclayout(~{::th:block})}">
+
+<body>
+	<th:block>
+		<div th:each="entry : ${groupedPrograms}">
+
+			<div id="cat10515" class="tab-pane fade active in">
+
+				<!-- Tiêu đề từng nhóm -->
+				<div class="hda" th:text="${entry.key.name}"></div>
+
+				<div class="row">
+
+					<div class="col-xs-6 col20" th:each="program : ${entry.value}">
+
+						<div class="blav">
+
+							<a class="imgla" th:href="@{/program/{id}(id=${program.id})}" th:title="${program.title}">
+								<img class="img-project" th:src="${thumbnails[program.id]}" th:alt="${program.title}"
+									width="200px" height="150px">
+							</a>
+
+							<a class="ttae" th:href="@{/programs/{id}(id=${program.id})}" th:title="${program.title}"
+								th:text="${program.title}">
+							</a>
+
+							<div class="dsl">
+								Số lượng:
+								<span th:text="${program.quantity}"></span>
+							</div>
+
+							<div class="dng">
+								Lương:
+								<span th:text="${program.salary}"></span>
+							</div>
+
+
+
+
+							<div class="dtt">
+								Trạng thái:
+								<span th:if="${program.status == 'OPEN'}">Đang tuyển</span>
+								<span th:if="${program.status == 'CLOSED'}">Đã đóng đơn</span>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="vmc" th:if="${#lists.size(entry.value) > 5}">
+						<a th:href="@{/categories/{id}(id=${entry.key.id})}" title="Xem thêm">
+							Xem thêm
+						</a>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</th:block>
+</body>
+
+</html>

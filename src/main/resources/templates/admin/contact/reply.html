@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<body>
+	<th:block>
+		<form th:action="@{/admin/contacts/reply/{id}(id=${contact.id})}" th:object="${contact}" method="post">
+
+			<div class="card">
+				<div class="card-header">
+					<h5>Chi tiết liên hệ</h5>
+				</div>
+
+				<div class="card-body">
+
+					<!-- Thông tin khách -->
+					<div class="mb-3">
+						<label>Họ tên</label>
+						<input type="text" class="form-control" th:value="*{fullName}" readonly>
+					</div>
+
+					<div class="mb-3">
+						<label>Email</label>
+						<input type="text" class="form-control" th:value="*{email}" readonly>
+					</div>
+
+					<div class="mb-3">
+						<label>Số điện thoại</label>
+						<input type="text" class="form-control" th:value="*{phone}" readonly>
+					</div>
+
+					<div class="mb-3">
+						<label>Tiêu đề</label>
+						<input type="text" class="form-control" th:value="*{title}" readonly>
+					</div>
+
+					<div class="mb-3">
+						<label>Nội dung</label>
+						<textarea class="form-control" rows="4" readonly th:text="*{message}">
+                </textarea>
+					</div>
+
+					<hr>
+
+					<!-- Cập nhật trạng thái -->
+					<div class="mb-3">
+						<label>Trạng thái</label>
+						<select class="form-control" th:field="*{status}">
+							<option value="NEW">NEW</option>
+							<option value="PROCESSING">PROCESSING</option>
+							<option value="REPLIED">REPLIED</option>
+							<option value="CLOSED">CLOSED</option>
+						</select>
+					</div>
+
+					<!-- Nội dung phản hồi -->
+					<div class="mb-3">
+						<label>Nội dung phản hồi</label>
+						<textarea class="form-control" rows="5" th:field="*{replyContent}">
+                </textarea>
+					</div>
+
+				</div>
+
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary">
+						Gửi phản hồi
+					</button>
+
+					<a th:href="@{/admin/contact}" class="btn btn-secondary">
+						Quay lại
+					</a>
+				</div>
+			</div>
+		</form>
+	</th:block>
+</body>
+
+</html>

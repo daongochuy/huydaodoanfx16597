@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/public/layout::publiclayout(~{::th:block})}">
+
+<body>
+<th:block>
+
+<div class="container" style="margin-top:30px; margin-bottom:50px;">
+
+    <!-- Tiêu đề -->
+    <h2 style="margin-bottom:20px;">
+        Đăng ký chương trình:
+        <span th:text="${program.title}" style="color:#d9534f;"></span>
+    </h2>
+
+    <!-- Thông báo thành công -->
+    <div th:if="${param.success}"
+         class="alert alert-success">
+        Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm.
+    </div>
+
+    <!-- FORM -->
+    <form th:action="@{/programs/{id}/register(id=${program.id})}"
+          method="post"
+          th:object="${member}"
+          class="form-horizontal">
+
+        <div class="row">
+
+            <!-- Họ tên -->
+            <div class="col-md-6 form-group">
+                <label>Họ và tên *</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="*{fullName}"
+                       required>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6 form-group">
+                <label>Email *</label>
+                <input type="email"
+                       class="form-control"
+                       th:field="*{email}"
+                       required>
+            </div>
+
+            <!-- Số điện thoại -->
+            <div class="col-md-6 form-group">
+                <label>Số điện thoại *</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="*{phone}"
+                       required>
+            </div>
+
+            <!-- Giới tính -->
+            <div class="col-md-6 form-group">
+                <label>Giới tính</label>
+                <select class="form-control"
+                        th:field="*{gender}">
+                    <option value="">-- Chọn --</option>
+                    <option value="MALE">Nam</option>
+                    <option value="FEMALE">Nữ</option>
+                    <option value="OTHER">Khác</option>
+                </select>
+            </div>
+
+            <!-- Ngày sinh -->
+            <div class="col-md-6 form-group">
+                <label>Ngày sinh</label>
+                <input type="date"
+                       class="form-control"
+                       th:field="*{birthday}">
+            </div>
+
+            <!-- Trình độ học vấn -->
+            <div class="col-md-6 form-group">
+                <label>Trình độ học vấn</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="*{educationLevel}">
+            </div>
+
+            <!-- Địa chỉ -->
+            <div class="col-md-12 form-group">
+                <label>Địa chỉ</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="*{address}">
+            </div>
+
+            <!-- Kinh nghiệm -->
+            <div class="col-md-12 form-group">
+                <label>Kinh nghiệm</label>
+                <textarea class="form-control"
+                          rows="3"
+                          th:field="*{experience}"></textarea>
+            </div>
+
+            <!-- Ghi chú cho đơn đăng ký -->
+            <div class="col-md-12 form-group">
+                <label>Ghi chú thêm (nếu có)</label>
+                <textarea class="form-control"
+                          rows="3"
+                          name="note"></textarea>
+            </div>
+
+        </div>
+
+        <!-- Nút submit -->
+        <div style="margin-top:20px;">
+            <button type="submit"
+                    class="btn btn-danger btn-lg">
+                ĐĂNG KÝ NGAY
+            </button>
+
+            <a th:href="@{/programs/{id}(id=${program.id})}"
+               class="btn btn-default btn-lg">
+                Quay lại
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+</th:block>
+</body>
+</html>

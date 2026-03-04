@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đăng ký</title>
+</head>
+
+<body>
+<div class="container mt-4">
+<th:block>
+
+<h2 class="mb-4">📋 Quản lý đăng ký chương trình</h2>
+<form th:action="@{/admin/registration}" method="get" class="row g-2 mb-3">
+
+    <div class="col-md-4">
+        <select name="status" class="form-select">
+            <option value="">-- Tất cả trạng thái --</option>
+            <option value="PENDING" th:selected="${status == 'PENDING'}">
+                Chờ xử lý
+            </option>
+            <option value="APPROVED" th:selected="${status == 'APPROVED'}">
+                Đã duyệt
+            </option>
+            <option value="REJECTED" th:selected="${status == 'REJECTED'}">
+                Từ chối
+            </option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">
+            Lọc
+        </button>
+    </div>
+
+</form>
+<!-- TABLE -->
+<form th:action="@{/admin/registration/delete}" method="post"
+      onsubmit="return confirm('Bạn chắc chắn muốn xóa các đăng ký đã chọn?')">
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Chương trình</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Điện thoại</th>
+        <th>Giới tính</th>
+        <th>Ngày sinh</th>
+        <th>Trình độ</th>
+        <th>Ghi chú</th>
+        <th>Trạng thái</th>
+        <th>Ngày đăng ký</th>
+        <th>
+            <input type="checkbox" id="chkAll"/>
+        </th>
+        <th width="160">Hành động</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <!-- Nếu không có dữ liệu -->
+    <tr th:if="${#lists.isEmpty(registrations)}">
+        <td colspan="13" class="text-center">
+            Không có đăng ký nào
+        </td>
+    </tr>
+
+    <!-- Lặp dữ liệu -->
+    <tr th:each="r : ${registrations}">
+        <td th:text="${r.id}"></td>
+
+        <td th:text="${r.program.title}"></td>
+
+        <td th:text="${r.member.fullName}"></td>
+
+        <td th:text="${r.member.email}"></td>
+
+        <td th:text="${r.member.phone}"></td>
+
+        <td th:text="${r.member.gender}"></td>
+
+        <td th:text="${#temporals.format(r.member.birthday, 'dd/MM/yyyy')}"></td>
+
+        <td th:text="${r.member.educationLevel}"></td>
+
+        <td th:text="${r.note}"></td>
+
+        <td>
+            <span th:if="${r.status == 'PENDING'}"
+                  class="badge bg-warning text-dark">
+                Mới gửi
+            </span>
+              <span th:if="${r.status == 'PROCESSING'}"
+                  class="badge bg-warning text-dark">
+                Đang xét
+            </span>
+            <span th:if="${r.status == 'APPROVED'}"
+                  class="badge bg-success">
+                Đã duyệt
+            </span>
+
+            <span th:if="${r.status == 'REJECTED'}"
+                  class="badge bg-danger">
+                Từ chối
+            </span>
+        </td>
+
+        <td th:text="${#temporals.format(r.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+
+        <td>
+            <input type="checkbox"
+                   class="checkID"
+                   name="lid"
+                   th:value="${r.id}"/>
+        </td>
+
+        <td>
+            <a th:href="@{'/admin/registration/detail/' + ${r.id}}"
+               class="btn btn-sm btn-info">
+                Xem
+            </a>
+
+            <a th:href="@{'/admin/registration/approve/' + ${r.id}}"
+               class="btn btn-sm btn-success">
+                Duyệt
+            </a>
+
+            <a th:href="@{'/admin/registration/reject/' + ${r.id}}"
+               class="btn btn-sm btn-danger">
+                Từ chối
+            </a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<!-- PHÂN TRANG -->
+<div>
+    Total Items: [[${totalItems}]] -
+    Page [[${currentPage}]] of [[${totalPages}]] Pages
+</div>
+
+<span th:each="i:${#numbers.sequence(1,totalPages)}">
+    <a th:if="${i != currentPage}"
+       th:href="@{/admin/registration(page=${i}, status=${status})}">
+        [[${i}]]
+    </a>
+
+    <span th:unless="${i != currentPage}">
+        [[${i}]]
+    </span>
+    &nbsp;&nbsp;
+</span>
+
+<br/><br/>
+
+<button type="submit" class="btn btn-primary">
+    XÓA CÁC ĐĂNG KÝ ĐÃ CHỌN
+</button>
+
+<a th:href="@{/admin/registration/deleteAll}"
+   onclick="return confirm('Bạn chắc chắn muốn xóa tất cả đăng ký?')"
+   class="btn btn-danger">
+    XÓA TẤT CẢ
+</a>
+
+</form>
+
+</th:block>
+</div>
+</body>
+</html>

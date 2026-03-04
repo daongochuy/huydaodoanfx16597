@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/public/layout::publiclayout(~{::th:block})}">
+
+<body>
+
+	<th:block>
+
+		<div class="container" style="margin-top:40px; margin-bottom:40px;">
+
+			<th:block th:if="${program != null}">
+
+				<div class="row">
+					<!-- Thông báo đăng ký thành công -->
+					<div th:if="${param.success}" class="alert alert-success" style="margin-top:20px;">
+						🎉 Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm.
+					</div>
+					<!-- ================= ẢNH ================= -->
+					<div class="col-md-5" th:if="${thumbnails[program.id] != null}">
+
+						<div style="border:1px solid #eee; padding:10px; border-radius:6px;">
+							<img class="img-project" th:src="@{${thumbnails[program.id]}}" th:alt="${program.title}"
+								style="width:100%; height:auto; border-radius:6px;">
+						</div>
+
+					</div>
+
+
+					<!-- ================= THÔNG TIN ================= -->
+					<div class="col-md-7">
+
+						<h2 th:text="${program.title}" style="font-weight:bold; color:#d9534f; margin-bottom:20px;">
+						</h2>
+
+						<table class="table table-bordered">
+
+							<tr th:if="${program.quantity != null}">
+								<th style="width:35%">Số lượng tuyển</th>
+								<td th:text="${program.quantity}"></td>
+							</tr>
+
+							<tr th:if="${program.salary != null}">
+								<th>Mức lương</th>
+								<td th:text="${program.salary}"></td>
+							</tr>
+
+							<tr th:if="${program.status != null}">
+								<th>Trạng thái</th>
+								<td>
+									<span th:if="${program.status == 'OPEN'}" style="color:green; font-weight:bold;">
+										Đang tuyển
+									</span>
+
+									<span th:if="${program.status == 'CLOSED'}" style="color:gray; font-weight:bold;">
+										Đã đóng đơn
+									</span>
+								</td>
+							</tr>
+
+						</table>
+
+						<!-- ================= NÚT ĐĂNG KÝ ================= -->
+						<div style="margin-top:20px;" th:if="${program.status == 'OPEN'}">
+
+							<a th:href="@{/programs/{id}/register(id=${program.id})}" style="display:inline-block;
+                                  background:#e74c3c;
+                                  color:#fff;
+                                  padding:12px 30px;
+                                  font-size:16px;
+                                  font-weight:bold;
+                                  border-radius:5px;
+                                  text-decoration:none;">
+								ĐĂNG KÝ NGAY
+							</a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- ================= MÔ TẢ ================= -->
+				<th:block th:if="${program.description != null and !#strings.isEmpty(program.description.trim())}">
+					<div class="row" style="margin-top:40px;">
+						<div class="col-md-12">
+
+							<h3 style="border-left:5px solid #d9534f;
+                                   padding-left:10px;
+                                   margin-bottom:15px;">
+								Mô tả chương trình
+							</h3>
+
+							<div th:utext="${program.description}" style="margin-bottom:30px; line-height:26px;">
+							</div>
+
+						</div>
+					</div>
+				</th:block>
+
+				<!-- ================= QUYỀN LỢI ================= -->
+				<th:block th:if="${program.benefits != null and !#strings.isEmpty(program.benefits.trim())}">
+					<div class="row">
+						<div class="col-md-12">
+
+							<h3 style="border-left:5px solid #d9534f;
+                                   padding-left:10px;
+                                   margin-bottom:15px;">
+								Quyền lợi
+							</h3>
+
+							<div style="line-height:28px;"
+								th:utext="${#strings.replace(program.benefits, '✅', '<br>✅')}">
+							</div>
+
+						</div>
+					</div>
+				</th:block>
+
+				<!-- ================= NỘI DUNG ĐÀO TẠO ================= -->
+				<th:block
+					th:if="${program.trainingContent != null and !#strings.isEmpty(program.trainingContent.trim())}">
+					<div class="row">
+						<div class="col-md-12">
+
+							<h3 style="border-left:5px solid #d9534f;
+                                   padding-left:10px;
+                                   margin-top:40px;
+                                   margin-bottom:15px;">
+								Nội dung đào tạo
+							</h3>
+
+							<div th:utext="${program.trainingContent}" style="line-height:26px;">
+							</div>
+
+						</div>
+					</div>
+				</th:block>
+
+			</th:block>
+
+			<!-- ================= KHÔNG TÌM THẤY ================= -->
+			<th:block th:if="${program == null}">
+				<div class="alert alert-danger">
+					Không tìm thấy chương trình.
+				</div>
+			</th:block>
+
+		</div>
+
+	</th:block>
+
+</body>
+
+</html>

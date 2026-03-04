@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<body>
+<th:block>
+    <div class="container mt-4">
+        <h3 class="mb-4">➕ Thêm chương trình</h3>
+
+        <form th:action="@{/admin/programs/save}" th:object="${program}" method="post" class="row g-3">
+
+            <!-- TITLE -->
+            <div class="col-md-6">
+                <label class="form-label">Tiêu đề</label>
+                <input type="text" th:field="*{title}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+            </div>
+
+            <!-- JOB -->
+            <div class="col-md-6">
+                <label class="form-label">Ngành nghề</label>
+                <input type="text" th:field="*{jobName}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('jobName')}" th:errors="*{jobName}"></div>
+            </div>
+
+            <!-- COUNTRY -->
+            <div class="col-md-4">
+                <label class="form-label">Quốc gia</label>
+                <input type="text" th:field="*{country}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
+            </div>
+
+            <!-- SALARY -->
+            <div class="col-md-4">
+                <label class="form-label">Lương</label>
+                <input type="number" step="0.01" th:field="*{salary}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+            </div>
+
+            <!-- CURRENCY -->
+            <div class="col-md-4">
+                <label class="form-label">Đơn vị tiền</label>
+                <input type="text" th:field="*{currency}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}"></div>
+            </div>
+
+            <!-- CONTRACT -->
+            <div class="col-md-4">
+                <label class="form-label">Số năm hợp đồng</label>
+                <input type="number" th:field="*{contractYears}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('contractYears')}" th:errors="*{contractYears}"></div>
+            </div>
+
+            <!-- AGE MIN -->
+            <div class="col-md-4">
+                <label class="form-label">Tuổi từ</label>
+                <input type="number" th:field="*{ageMin}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('ageMin')}" th:errors="*{ageMin}"></div>
+            </div>
+
+            <!-- AGE MAX -->
+            <div class="col-md-4">
+                <label class="form-label">Tuổi đến</label>
+                <input type="number" th:field="*{ageMax}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('ageMax')}" th:errors="*{ageMax}"></div>
+            </div>
+
+            <!-- AGE RANGE ERROR -->
+            <div class="col-md-12">
+                <div class="text-danger" th:if="${#fields.hasErrors('validAgeRange')}" th:errors="*{validAgeRange}"></div>
+            </div>
+
+            <!-- GENDER -->
+            <div class="col-md-4">
+                <label class="form-label">Giới tính</label>
+                <select th:field="*{gender}" class="form-select">
+                    <option value="">-- Tất cả --</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+            </div>
+
+            <!-- EDUCATION -->
+            <div class="col-md-4">
+                <label class="form-label">Trình độ yêu cầu</label>
+                <input type="text" th:field="*{educationRequired}" class="form-control">
+            </div>
+
+            <!-- LANGUAGE -->
+            <div class="col-md-4">
+                <label class="form-label">Ngoại ngữ yêu cầu</label>
+                <input type="text" th:field="*{languageRequired}" class="form-control">
+            </div>
+
+            <!-- EXPERIENCE -->
+            <div class="col-md-4">
+                <label class="form-label">Kinh nghiệm</label>
+                <input type="text" th:field="*{experienceRequired}" class="form-control">
+            </div>
+
+            <!-- QUANTITY -->
+            <div class="col-md-4">
+                <label class="form-label">Số lượng tuyển</label>
+                <input type="number" th:field="*{quantity}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+            </div>
+
+            <!-- COST -->
+            <div class="col-md-4">
+                <label class="form-label">Chi phí</label>
+                <input type="number" step="0.01" th:field="*{cost}" class="form-control">
+                <div class="text-danger" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></div>
+            </div>
+
+            <!-- BENEFITS -->
+            <div class="col-md-12">
+                <label class="form-label">Quyền lợi</label>
+                <textarea th:field="*{benefits}" class="form-control" rows="2"></textarea>
+            </div>
+
+            <!-- TRAINING -->
+            <div class="col-md-12">
+                <label class="form-label">Nội dung đào tạo</label>
+                <textarea th:field="*{trainingContent}" class="form-control" rows="2"></textarea>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="col-md-12">
+                <label class="form-label">Mô tả</label>
+                <textarea th:field="*{description}" class="form-control" rows="3"></textarea>
+            </div>
+
+            <!-- DATES -->
+            <div class="col-md-4">
+                <label class="form-label">Ngày phỏng vấn</label>
+                <input type="date" th:field="*{interviewDate}" class="form-control">
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Ngày bắt đầu làm</label>
+                <input type="date" th:field="*{startWorkDate}" class="form-control">
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-md-4">
+                <label class="form-label">Trạng thái</label>
+                <select th:field="*{status}" class="form-select">
+                    <option value="">-- Chọn trạng thái --</option>
+                    <option value="OPEN">Đang tuyển</option>
+                    <option value="CLOSED">Đã đóng</option>
+                </select>
+                <div class="text-danger" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="col-md-6">
+                <label class="form-label">Danh mục</label>
+                <select th:field="*{category.id}" class="form-select">
+                    <option value="">-- Chọn danh mục --</option>
+                    <option th:each="c : ${categories}"
+                            th:value="${c.id}"
+                            th:text="${c.name}">
+                    </option>
+                </select>
+                <div class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">💾 Lưu</button>
+                <a th:href="@{/admin/programs}" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</th:block>
+</body>
+</html>
