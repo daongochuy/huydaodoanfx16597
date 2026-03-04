@@ -81,14 +81,17 @@ public class RegistrationController {
 	    return "redirect:/admin/registration/detail/" + id+"?success=true";
 	}
 	
-	@GetMapping("/approve/{id}")
-	public String approveRegistration(@PathVariable Long id,
-	                                  @RequestParam(defaultValue = "1") int page,
-	                                  @RequestParam(required = false) String status) {
-
-	    registrationService.approve(id);
-
-	    return "redirect:/admin/registration?page=" + page +
-	           (status != null ? "&status=" + status : "");
-	}
+	/*
+	 * @GetMapping("/approve/{id}") public String approveRegistration(@PathVariable
+	 * Long id,
+	 * 
+	 * @RequestParam(defaultValue = "1") int page,
+	 * 
+	 * @RequestParam(required = false) String status) {
+	 * 
+	 * registrationService.approve(id);
+	 * 
+	 * return "redirect:/admin/registration?page=" + page + (status != null ?
+	 * "&status=" + status : ""); }
+	 */
 }

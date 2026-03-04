@@ -127,7 +127,7 @@ public class UserController {
 			session.setAttribute("msg", "Wrong old password ");
 		}
 
-		return "redirect:/changePassword";
+		return "redirect:/admin/user/changePassword";
 	}
 
 	@GetMapping("/forgot-password")

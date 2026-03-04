@@ -80,11 +80,13 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
+						
 						<img th:src="@{/admin/dist/img/user2-160x160.jpg}" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>Admin</p>
-						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+						<p>xin chào:</p>
+						 <span th:text="${currentUser}"></span>
+						<a href="#"><i class="fa fa-circle text-success"></i> </a>
 
 					</div>
 				</div>
@@ -103,11 +105,10 @@
 						</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/admin/user/create}"><i class="fa fa-circle-o"></i> Tạo User</a></li>
-							<li><a th:href="@{/admin/user/resetPassword}"><i class="fa fa-circle-o"></i> Reset
-									Password</a></li>
+							
 							<li><a th:href="@{/admin/user/changePassword}"><i class="fa fa-circle-o"></i> Đổi
 									Password</a></li>
-							<li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+							<li><a th:href="@{/admin/user}"><i class="fa fa-circle-o"></i> Danh Sách User</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
@@ -121,10 +122,7 @@
 									trình</a></li>
 							<li><a th:href="@{/admin/program-images/list}"><i class="fa fa-circle-o"></i> Hình Ảnh
 									Chương Trình</a></li>
-							<li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-							<li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-							<li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-							<li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+							
 						</ul>
 					</li>
 					<li class="treeview">
@@ -136,39 +134,37 @@
 							<li><a th:href="@{/admin/programs/}"><i class="fa fa-circle-o"></i> Danh Sách Chương
 									Trình</a>
 							</li>
-							<li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a>
-							</li>
-							<li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+							
 						</ul>
 					</li>
 					<li class="treeview">
 						<a href="#">
-							<i class="fa fa-table"></i> <span>Quản lý đăng ký</span>
+							<i class="fa fa-user"></i> <span>Quản lý đăng ký</span>
 							<i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/admin/registration/}"><i class="fa fa-circle-o"></i> Danh sách đăng ký</a></li>
-							<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+							
 						</ul>
 					</li>
 					<li class="treeview">
 						<a href="#">
-							<i class="fa fa-table"></i> <span>Liên Hệ</span>
+							<i class="fa fa-envelope"></i> <span>Liên Hệ</span>
 							<i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/admin/contacts}"><i class="fa fa-circle-o"></i> Danh sách liên hệ</a></li>
-							<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+							
 						</ul>
 					</li>
 					<li class="treeview">
 						<a href="#">
-							<i class="fa fa-table"></i> <span>Hệ Thống</span>
+							<i class="fa fa-solid fa-gears"></i> <span>Hệ Thống</span>
 							<i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-							<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+							<li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Cấu hình hệ thống </a></li>
+							
 						</ul>
 					</li>
 

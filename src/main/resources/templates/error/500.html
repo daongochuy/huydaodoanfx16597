@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>500 - Lỗi hệ thống</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .box {
+            background: white;
+            display: inline-block;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 80px;
+            margin: 0;
+            color: #ffc107;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>500</h1>
+    <p>Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.</p>
+    <a th:href="@{/}">Quay về trang chủ</a>
+</div>
+
+</body>
+</html>
