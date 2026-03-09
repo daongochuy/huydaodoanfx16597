@@ -11,7 +11,7 @@
 						</th:block>
 	</div>
 
-	<form action="#" th:action="@{/admin/user/save}" th:object="${myUser}" id="UserForm" method="POST">
+	<form action="#" th:action="@{/admin/admin/user/create}" th:object="${myUser}" id="UserForm" method="POST">
 	<div class="row">
           <div class="col">
 				<input type="hidden" class="form-control mb-4" th:field="*{id}" placeholder="Enter ID" name="Id">
@@ -72,9 +72,9 @@
 			</div>
 			<div class="col">
 				<input type="radio" class="form-check-input" id="roleuser" name="role" value="ROLE_USER" th:field="*{role}"
-					checked>ROLE_USER
+					checked />ROLE_USER
 				<input type="radio" class="form-check-input" id="roleadmin" name="role" value="ROLE_ADMIN" th:field="*{role}"
-					>ROLE_ADMIN
+					/>ROLE_ADMIN
 			</div>
 		</div>
 		<div class="row">

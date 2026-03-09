@@ -11,6 +11,8 @@ public interface PostService {
     Post save(Post post);
 
     Post findById(Long id);
+    
+    public Post getPostByCategory(String category);
 
     void delete(Long id);
 }

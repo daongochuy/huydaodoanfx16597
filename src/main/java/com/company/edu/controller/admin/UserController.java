@@ -40,14 +40,14 @@ public class UserController {
 
 	}
 
-	@GetMapping("/create")
+	@GetMapping("/admin/create")
 	private String UserCreate(Model model) {
 		User myUser = new User();
 		model.addAttribute("myUser", myUser);
 		return "admin/user/createUser";
 	}
 
-	@PostMapping("/create")
+	@PostMapping("/admin/create")
 	private String saveUser(@ModelAttribute("myUser") User myUser, Model model, HttpSession session) {
 		boolean f = userService.checkEmail(myUser.getEmail());
 		Object msg = session.getAttribute("msg");
@@ -65,7 +65,7 @@ public class UserController {
 			}
 		}
 
-		return "redirect:/admin/user/create";
+		return "redirect:/admin/user";
 
 	}
 
@@ -104,12 +104,12 @@ public class UserController {
 		return "redirect:/admin/user/register";
 	}
 
-	@GetMapping("/changePassword")
+	@GetMapping("/admin/changePassword")
 	public String loadChangePassword() {
 		return "admin/user/change_password";
 	}
 
-	@PostMapping("/changePassword")
+	@PostMapping("/admin/changePassword")
 
 	public String changePassword(Principal p, @RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword, HttpSession session) {
@@ -127,7 +127,7 @@ public class UserController {
 			session.setAttribute("msg", "Wrong old password ");
 		}
 
-		return "redirect:/admin/user/changePassword";
+		return "redirect:/admin/admin/user/changePassword";
 	}
 
 	@GetMapping("/forgot-password")

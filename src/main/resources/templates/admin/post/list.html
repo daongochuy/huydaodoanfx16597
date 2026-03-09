@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout::adminlayout(~{::th:block})}">
+
+<body>
+
+<div class="container-fluid mt-4">
+
+<th:block>
+
+<!-- HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold text-primary mb-0">
+        <i class="bi bi-file-earmark-text me-2"></i> QUẢN LÝ BÀI VIẾT
+    </h4>
+
+    <a th:href="@{/admin/posts/create}"
+       class="btn btn-primary shadow-sm px-4">
+        <i class="bi bi-plus-circle me-1"></i> Thêm Bài Viết
+    </a>
+</div>
+
+
+<!-- TABLE CARD -->
+<div class="card border-0 shadow-lg rounded-4">
+<div class="card-body p-0">
+
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+
+<thead class="table-light text-center">
+<tr class="text-uppercase small text-muted">
+    <th>ID</th>
+    <th class="text-start">Tiêu đề</th>
+    <th>Danh mục</th>
+    <th>Thumbnail</th>
+    <th>Trạng thái</th>
+    <th>Ngày tạo</th>
+    <th width="170">Hành động</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr th:each="p : ${posts.content}" class="text-center">
+
+    <td class="fw-semibold" th:text="${p.id}"></td>
+
+    <td class="text-start fw-semibold text-dark"
+        th:text="${p.title}"></td>
+
+    <td>
+        <span class="badge bg-info-subtle text-info px-3 py-2 rounded-pill"
+              th:text="${p.category}">
+        </span>
+    </td>
+
+    <td>
+        <img th:src="${p.thumbnail != null ? p.thumbnail : '/images/no-image.png'}"
+             width="80"
+             height="60"
+             style="object-fit:cover; border-radius:6px;">
+    </td>
+
+    <td>
+        <span th:if="${p.enable}"
+              class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">
+            Hiển thị
+        </span>
+
+        <span th:if="${!p.enable}"
+              class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill">
+            Ẩn
+        </span>
+    </td>
+
+    <td th:text="${#temporals.format(p.createdAt,'dd-MM-yyyy HH:mm')}"></td>
+
+    <td>
+
+        <a th:href="@{'/admin/posts/edit/' + ${p.id}}"
+           class="btn btn-sm btn-outline-warning me-2 rounded-pill px-3">
+            <i class="bi bi-pencil-square"></i> Sửa
+        </a>
+
+        <a th:href="@{'/admin/posts/delete/' + ${p.id}}"
+           onclick="return confirm('Bạn có chắc muốn xóa bài viết?')"
+           class="btn btn-sm btn-outline-danger rounded-pill px-3">
+            <i class="bi bi-trash"></i> Xóa
+        </a>
+
+    </td>
+
+</tr>
+
+<!-- NO DATA -->
+<tr th:if="${posts.content.size() == 0}">
+<td colspan="7" class="text-center text-muted py-5">
+    <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+    Không có bài viết
+</td>
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
+</div>
+
+
+<!-- PAGINATION -->
+<div class="d-flex justify-content-between align-items-center mt-4">
+
+<div class="text-muted small">
+    Tổng: <strong>[[${totalItems}]]</strong> |
+    Trang <strong>[[${currentPage}]]</strong> /
+    <strong>[[${totalPages}]]</strong>
+</div>
+
+<nav>
+<ul class="pagination pagination-sm mb-0">
+
+<li class="page-item"
+    th:classappend="${currentPage == 1} ? 'disabled'">
+    <a class="page-link"
+       th:href="@{'/admin/posts/list/' + ${currentPage - 1}}">
+        «
+    </a>
+</li>
+
+<li class="page-item"
+    th:each="i:${#numbers.sequence(1,totalPages)}"
+    th:classappend="${i==currentPage}? 'active'">
+    <a class="page-link"
+       th:href="@{'/admin/posts/list/'+${i}}"
+       th:text="${i}">
+    </a>
+</li>
+
+<li class="page-item"
+    th:classappend="${currentPage == totalPages} ? 'disabled'">
+    <a class="page-link"
+       th:href="@{'/admin/posts/list/' + ${currentPage + 1}}">
+        »
+    </a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+
+</th:block>
+
+</div>
+
+</body>
+</html>

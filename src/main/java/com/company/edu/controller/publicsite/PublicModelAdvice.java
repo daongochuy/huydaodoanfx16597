@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.company.edu.entity.Category;
 import com.company.edu.service.impl.CategoryService;
 
+
 import java.util.List;
 @ControllerAdvice(basePackages = "com.company.edu.controller.publicsite")
 public class PublicModelAdvice {
 	   @Autowired
 		private CategoryService categoryService;
-
+	  
 	    
 	    @ModelAttribute("categories")
 	    public List<Category> loadCategories() {
@@ -29,4 +30,5 @@ public class PublicModelAdvice {
 	    public List<Category> loadCategorytrainings() {
 	        return categoryService.findByType("khoa_hoc");
 	    }
+	   
 }

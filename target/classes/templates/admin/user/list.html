@@ -61,10 +61,10 @@
 
                 <!-- ACTION -->
                 <td>
-                    <a th:href="@{'/admin/user/edit/' + ${u.id}}"
+                    <a th:href="@{'/admin/admin/user/edit/' + ${u.id}}"
                        class="btn btn-sm btn-warning">Sửa</a>
 
-                    <a th:href="@{'/admin/user/delete/' + ${u.id}}"
+                    <a th:href="@{'/admin/admin/user/delete/' + ${u.id}}"
 								onclick="return confirm('Xóa user này?')" class="btn btn-sm btn-danger">Xóa</a>
                 </td>
             </tr>
@@ -87,7 +87,7 @@
 
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
             <a th:if="${i != currentPage}"
-               th:href="@{/admin/users(page=${i})}">
+               th:href="@{/admin/admin/users(page=${i})}">
                 [[${i}]]
             </a>
 
@@ -99,7 +99,7 @@
 
         <br><br>
 
-        <a th:href="@{/admin/user/create}"
+        <a th:href="@{/admin/admin/user/create}"
            class="btn btn-success">
             ➕ Thêm người dùng
         </a>

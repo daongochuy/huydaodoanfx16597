@@ -9,29 +9,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "posts")
 
 public class Post {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(length = 200)
-    private String title;
+	@Column(length = 200)
+	private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+	@Column(columnDefinition = "TEXT")
+	private String content;
 
-    @Column(length = 50)
-    private String category;
+	@Column(length = 50)
+	private String category;
 
-    @Column(length = 255)
-    private String thumbnail;
+	@Column(length = 255)
+	private String thumbnail;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+	@Column(name = "enable")
+	private boolean enable;
+
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
 	public Long getId() {
 		return id;
@@ -73,6 +75,14 @@ public class Post {
 		this.thumbnail = thumbnail;
 	}
 
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -94,6 +104,5 @@ public class Post {
 	public Post() {
 		super();
 	}
-    
 
 }

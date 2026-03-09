@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.edu.entity.Category;
+import com.company.edu.entity.Post;
 import com.company.edu.entity.Program;
 import com.company.edu.repository.CategoryRepository;
+import com.company.edu.repository.PostRepository;
 import com.company.edu.repository.ProgramRepository;
 
 @Service
@@ -18,6 +20,8 @@ public class homeServiceImpl implements homeService {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProgramRepository programRepository;
+	@Autowired
+	private PostRepository postRepository;
 	@Override
 	public List<Category> getHomeCategories() {
 		return categoryRepository.findAllWithPrograms();
@@ -30,6 +34,10 @@ public class homeServiceImpl implements homeService {
 		    return programs.stream()
 		            .collect(Collectors.groupingBy(Program::getCategory));
 	}
+
+	
+
+	
 	
 
 

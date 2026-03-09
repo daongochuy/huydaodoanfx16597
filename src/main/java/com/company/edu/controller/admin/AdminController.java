@@ -22,10 +22,12 @@ import com.company.edu.service.impl.UserService;
 public class AdminController {
 	@Autowired
 	private UserService userService;
+
 	@GetMapping("/signin")
 	public String signin() {
-	    return "admin/user/login";
+		return "admin/user/login";
 	}
+
 	@ModelAttribute
 	private void userDetails(Model m, Principal p) {
 		if (p != null) {
@@ -35,17 +37,24 @@ public class AdminController {
 			m.addAttribute("user", user);
 		}
 	}
+
 	@GetMapping("")
 	private String HomeView() {
 		return "admin/user/login";
 	}
-	
+
 	@GetMapping("/user/signin")
 	private String HomeLogin() {
-		
+
 		return "admin/user/login";
 	}
-	@GetMapping("/user")
+	@GetMapping("/403")
+	private String Show403() {
+
+		return "admin/user/403";
+	}
+
+	@GetMapping("/admin/user")
 	public String list(@RequestParam(defaultValue = "1") int page, Model model) {
 		int pageable=Math.max(page-1,0);
 		Page<User> PageUser=userService.getAll(PageRequest.of(pageable, 10));
@@ -55,25 +64,26 @@ public class AdminController {
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("users", PageUser);
-		return "admin/user/list";
+		return "admin//admin/user/list";
 	}
-	@GetMapping("/user/{i}")
+
+	@GetMapping("/admin/user/{i}")
 	public String listPage(@PathVariable("i") int page, Model model) {
-		int pageable=Math.max(page-1,0);
-		Page<User> PageUser=userService.getAll(PageRequest.of(pageable, 10));
-		long totalItems=PageUser.getTotalElements();
-		int totalPages=PageUser.getTotalPages();
+		int pageable = Math.max(page - 1, 0);
+		Page<User> PageUser = userService.getAll(PageRequest.of(pageable, 10));
+		long totalItems = PageUser.getTotalElements();
+		int totalPages = PageUser.getTotalPages();
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("users", PageUser);
 		return "admin/user/list";
 	}
-	@GetMapping("/user/delete/{id}")
-	public String DeleteUser(@PathVariable("id") long id,Model model)
-	{   
+
+	@GetMapping("/admin/user/delete/{id}")
+	public String DeleteUser(@PathVariable("id") long id, Model model) {
 		userService.deleteById(id);
-		return "redirect:/admin/user";
+		return "redirect:/admin/admin/user";
 	}
 
 }

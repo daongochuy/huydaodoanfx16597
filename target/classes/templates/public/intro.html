@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/public/layout::publiclayout(~{::th:block})}">
+
+<head>
+	<title th:text="${intro.title}"></title>
+</head>
+
+<body>
+	<th:block>
+		<div th:if="${intro != null}">
+			<h1 th:text="${intro.title}"></h1>
+			<div th:utext="${intro.content}"></div>
+		</div>
+
+		<div th:if="${intro == null}">
+			<p>Chưa có bài giới thiệu</p>
+		</div>
+	</th:block>
+</body>
+
+</html>

@@ -37,6 +37,12 @@ public class SecurityConfig {
 		return auth;
 	}
 
+	private final CustomAccessDeniedHandler accessDeniedHandler;
+
+	public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler) {
+		this.accessDeniedHandler = accessDeniedHandler;
+	}
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -56,7 +62,7 @@ public class SecurityConfig {
 				.formLogin(form -> form.loginPage("/admin/signin").loginProcessingUrl("/admin/user/signin")
 						.usernameParameter("email").passwordParameter("password")
 						.defaultSuccessUrl("/admin/programs/", true).permitAll())
-
+				.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler))
 				.logout(logout -> logout.permitAll());
 
 		return http.build();
