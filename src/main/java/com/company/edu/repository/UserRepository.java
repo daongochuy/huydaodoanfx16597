@@ -29,6 +29,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 		""")
 		User findByEmailAndMobile(@Param("email") String email,
 		                                    @Param("mobile") String mobile);
+	@Query("SELECT u FROM User u WHERE u.email = :keyword OR u.mobileNumber = :keyword")
+	Page<User> findByEmailOrPhone(@Param("keyword") String keyword, Pageable pageable);
 
 	Page<User> findByUsernameContainingIgnoreCase(String username, Pageable pageable);
 

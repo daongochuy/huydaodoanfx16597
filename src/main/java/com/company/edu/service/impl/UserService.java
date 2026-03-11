@@ -24,6 +24,7 @@ public interface UserService {
 	User findByEmail(String email);
 
 	User findByEmailAndMobileNumber(String email, String mobile);
-
+	
+    Page<User> findByEmailorPhone(String keyword, Pageable pageable);
 	public boolean checkEmail(String email);
 }

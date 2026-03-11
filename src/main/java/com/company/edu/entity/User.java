@@ -46,30 +46,13 @@ public class User {
 	}
 
 	@Column(length = 20)
-	private String role; // ADMIN, STAFF
+	private String role; // ADMIN, USER
 
 	@Column(length = 20)
 	private String status;
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
-
-	public User() {
-		super();
-	}
-
-	public User(Long id, String username, String password, String fullName, String role, String status,
-			LocalDateTime createdAt) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.fullName = fullName;
-		this.role = role;
-		this.status = status;
-		this.createdAt = createdAt;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -125,5 +108,23 @@ public class User {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public User() {
+		super();
+	}
+
+	public User(Long id, String username, String password, String fullName, String role, String status,
+			LocalDateTime createdAt) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.fullName = fullName;
+		this.role = role;
+		this.status = status;
+		this.createdAt = createdAt;
+	}
+
+	
 
 }

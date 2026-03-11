@@ -1,110 +1,123 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="admin/layout::adminlayout(~{::th:block})">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/layout::adminlayout(~{::th:block})">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Quản lý người dùng</title>
+	<meta charset="UTF-8">
+	<title>Quản lý người dùng</title>
 </head>
 
 <body>
-<div class="container mt-4">
-    <th:block>
+	<div class="container mt-4">
+		<th:block>
 
-        <h2 class="mb-4">👤 Quản lý người dùng (Users)</h2>
+			<h2 class="mb-4">👤 Quản lý người dùng (Users)</h2>
+			<form th:action="@{/admin/admin/user}" method="get" class="row g-2 mb-3">
 
-        <!-- TABLE -->
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>SĐT</th>
-                <th>Vai trò</th>
-                <th>Trạng thái</th>
-                <th>Ngày tạo</th>
-                <th width="170">Hành động</th>
-            </tr>
-            </thead>
+				<div class="col-md-4">
+					<input type="text" name="keyword" class="form-control"
+						placeholder="Nhập email hoặc số điện thoại..." th:value="${keyword}">
+				</div>
 
-            <tbody>
+				<div class="col-md-2">
+					<button type="submit" class="btn btn-primary w-100">
+						🔍 Tìm kiếm
+					</button>
+				</div>
 
-            <tr th:each="u : ${users.content}">
-                <td th:text="${u.id}"></td>
-                <td th:text="${u.username}"></td>
-                <td th:text="${u.fullName}"></td>
-                <td th:text="${u.email}"></td>
-                <td th:text="${u.mobileNumber}"></td>
+				<div class="col-md-6 text-end">
+					<a th:href="@{/admin/admin/user/create}" class="btn btn-success">
+						➕ Thêm người dùng
+					</a>
+				</div>
 
-                <!-- ROLE -->
-                <td>
-                    <span th:if="${u.role == 'ADMIN'}" class="badge bg-danger">ADMIN</span>
-                    <span th:if="${u.role == 'STAFF'}" class="badge bg-primary">STAFF</span>
-                    <span th:if="${u.role != 'ADMIN' and u.role != 'STAFF'}"
-                          class="badge bg-secondary"
-                          th:text="${u.role}">
-                    </span>
-                </td>
+			</form>
+			<!-- TABLE -->
+			<table class="table table-bordered table-hover align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Username</th>
+						<th>Họ tên</th>
+						<th>Email</th>
+						<th>SĐT</th>
+						<th>Vai trò</th>
+						<th>Trạng thái</th>
+						<th>Ngày tạo</th>
+						<th width="170">Hành động</th>
+					</tr>
+				</thead>
 
-                <!-- STATUS -->
-                <td>
-                    <span th:if="${u.status == 'ACTIVE'}"
-                          class="badge bg-success">Hoạt động</span>
-                    <span th:if="${u.status != 'ACTIVE'}"
-                          class="badge bg-secondary">Khóa</span>
-                </td>
+				<tbody>
 
-                <!-- CREATED DATE -->
-                <td th:text="${#temporals.format(u.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+					<tr th:each="u : ${users.content}">
+						<td th:text="${u.id}"></td>
+						<td th:text="${u.username}"></td>
+						<td th:text="${u.fullName}"></td>
+						<td th:text="${u.email}"></td>
+						<td th:text="${u.mobileNumber}"></td>
 
-                <!-- ACTION -->
-                <td>
-                    <a th:href="@{'/admin/admin/user/edit/' + ${u.id}}"
-                       class="btn btn-sm btn-warning">Sửa</a>
+						<!-- ROLE -->
+						<td>
+							<span th:if="${u.role == 'ADMIN'}" class="badge bg-danger">ADMIN</span>
+							<span th:if="${u.role == 'STAFF'}" class="badge bg-primary">STAFF</span>
+							<span th:if="${u.role != 'ADMIN' and u.role != 'STAFF'}" class="badge bg-secondary"
+								th:text="${u.role}">
+							</span>
+						</td>
 
-                    <a th:href="@{'/admin/admin/user/delete/' + ${u.id}}"
+						<!-- STATUS -->
+						<td>
+							<span th:if="${u.status == 'ACTIVE'}" class="badge bg-success">Hoạt động</span>
+							<span th:if="${u.status != 'ACTIVE'}" class="badge bg-secondary">Khóa</span>
+						</td>
+
+						<!-- CREATED DATE -->
+						<td th:text="${#temporals.format(u.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+
+						<!-- ACTION -->
+						<td>
+							<a th:href="@{'/admin/admin/user/edit/' + ${u.id}}" class="btn btn-sm btn-warning">Sửa</a>
+
+							<a th:href="@{'/admin/admin/user/delete/' + ${u.id}}"
 								onclick="return confirm('Xóa user này?')" class="btn btn-sm btn-danger">Xóa</a>
-                </td>
-            </tr>
+						</td>
+					</tr>
 
-            <!-- EMPTY -->
-            <tr th:if="${users.content.isEmpty()}">
-                <td colspan="9" class="text-center text-muted">
-                    Không có dữ liệu
-                </td>
-            </tr>
+					<!-- EMPTY -->
+					<tr th:if="${users.content.isEmpty()}">
+						<td colspan="9" class="text-center text-muted">
+							Không có dữ liệu
+						</td>
+					</tr>
 
-            </tbody>
-        </table>
+				</tbody>
+			</table>
 
-        <!-- PAGINATION -->
-        <div>
-            Total Users: [[${totalItems}]] -
-            Page [[${currentPage}]] of [[${totalPages}]]
-        </div>
+			<!-- PAGINATION -->
+			<div>
+				Total Users: [[${totalItems}]] -
+				Page [[${currentPage}]] of [[${totalPages}]]
+			</div>
 
-        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-            <a th:if="${i != currentPage}"
-               th:href="@{/admin/admin/users(page=${i})}">
-                [[${i}]]
-            </a>
+			<span th:each="i : ${#numbers.sequence(1, totalPages)}">
+				<a th:if="${i != currentPage}" th:href="@{/admin/user/{page}(page=${i}, keyword=${keyword})}">
+					[[${i}]]
+				</a>
 
-            <span th:unless="${i != currentPage}">
-                <b>[[${i}]]</b>
-            </span>
-            &nbsp;
-        </span>
+				<span th:unless="${i != currentPage}">
+					<b>[[${i}]]</b>
+				</span>
+				&nbsp;
+			</span>
 
-        <br><br>
+			<br><br>
 
-        <a th:href="@{/admin/admin/user/create}"
-           class="btn btn-success">
-            ➕ Thêm người dùng
-        </a>
+			<a th:href="@{/admin/admin/user/create}" class="btn btn-success">
+				➕ Thêm người dùng
+			</a>
 
-    </th:block>
-</div>
+		</th:block>
+	</div>
 </body>
+
 </html>

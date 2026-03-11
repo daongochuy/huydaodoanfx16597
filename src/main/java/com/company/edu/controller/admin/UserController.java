@@ -23,7 +23,7 @@ import com.company.edu.service.impl.UserService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping(value = "admin/user")
+@RequestMapping(value = "/admin/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -40,35 +40,7 @@ public class UserController {
 
 	}
 
-	@GetMapping("/admin/create")
-	private String UserCreate(Model model) {
-		User myUser = new User();
-		model.addAttribute("myUser", myUser);
-		return "admin/user/createUser";
-	}
-
-	@PostMapping("/admin/create")
-	private String saveUser(@ModelAttribute("myUser") User myUser, Model model, HttpSession session) {
-		boolean f = userService.checkEmail(myUser.getEmail());
-		Object msg = session.getAttribute("msg");
-
-		if (f) {
-			session.setAttribute("msg", "Email Id alreday exists");
-		}
-
-		else {
-			User uSer = userService.createUser(myUser);
-			if (uSer != null) {
-				session.setAttribute("msg", "Register Sucessfully");
-			} else {
-				session.setAttribute("msg", "Something wrong on server");
-			}
-		}
-
-		return "redirect:/admin/user";
-
-	}
-
+	
 	@GetMapping("/register")
 	private String HomeRegister(HttpSession session, Model model) {
 		Object msg = session.getAttribute("msg");
@@ -104,12 +76,12 @@ public class UserController {
 		return "redirect:/admin/user/register";
 	}
 
-	@GetMapping("/admin/changePassword")
+	@GetMapping("/changePassword")
 	public String loadChangePassword() {
 		return "admin/user/change_password";
 	}
 
-	@PostMapping("/admin/changePassword")
+	@PostMapping("/changePassword")
 
 	public String changePassword(Principal p, @RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword, HttpSession session) {
@@ -127,7 +99,7 @@ public class UserController {
 			session.setAttribute("msg", "Wrong old password ");
 		}
 
-		return "redirect:/admin/admin/user/changePassword";
+		return "redirect:/admin/user/changePassword?success=true";
 	}
 
 	@GetMapping("/forgot-password")

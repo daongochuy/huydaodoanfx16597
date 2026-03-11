@@ -76,4 +76,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.existsByEmail(email);
 	}
 
+	
+
+	@Override
+	public Page<User> findByEmailorPhone(String keyword, Pageable pageable) {
+		
+		return userRepository.findByEmailOrPhone(keyword,pageable);
+	}
+
 }
