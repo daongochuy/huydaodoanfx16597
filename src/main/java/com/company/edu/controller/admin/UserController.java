@@ -1,8 +1,11 @@
 package com.company.edu.controller.admin;
 
 import java.security.Principal;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +34,33 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncode;
+	 @Autowired
+	private JavaMailSender mailSender;
+	 
+	 public static String generateRandomPassword(int length) {
+
+	        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	        StringBuilder password = new StringBuilder();
+
+			Random random = new Random();
+
+	        for(int i = 0; i < length; i++){
+	            password.append(chars.charAt(random.nextInt(chars.length())));
+	        }
+
+	        return password.toString();
+	    }
+	 public void sendNewPassword(String email, String newPassword){
+
+	        SimpleMailMessage message = new SimpleMailMessage();
+
+	        message.setTo(email);
+	        message.setSubject("Reset Password");
+	        message.setText("Your new password is: " + newPassword);
+
+	        mailSender.send(message);
+	    }
 
 	private void userDetails(Model m, Principal p) {
 		String email = p.getName();
@@ -120,7 +150,12 @@ public class UserController {
 		User user = userService.findByEmailAndMobileNumber(email, mobileNum);
 
 		if (user != null) {
-			return "redirect:/admin/user/reset-password/"+user.getId();
+			//return "redirect:/admin/user/reset-password/"+user.getId();
+			String newPass=generateRandomPassword(9);
+			 user.setPassword(newPass);
+		     userService.saveUser(user);
+		     sendNewPassword(email,newPass);
+			return "/admin/user/messageResetPass";
 
 		} else {
 			session.setAttribute("msg", "Email hoặc số điện thoại không đúng");
@@ -152,5 +187,5 @@ public class UserController {
 	        return "redirect:/admin/user/reset-password/" + id;
 	    }
 	}
-
+	 
 }
