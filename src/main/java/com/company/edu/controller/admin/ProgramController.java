@@ -1,5 +1,6 @@
 package com.company.edu.controller.admin;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.company.edu.entity.Category;
 import com.company.edu.entity.Program;
 import com.company.edu.service.impl.CategoryService;
+import com.company.edu.service.impl.ExcelService;
 import com.company.edu.service.impl.ProgramImageService;
 import com.company.edu.service.impl.ProgramService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -34,6 +37,8 @@ public class ProgramController {
 	private CategoryService categoryService;
 	@Autowired
 	private ProgramImageService programImageService;
+	@Autowired
+	private ExcelService excelService;
 
 	@GetMapping("/")
 	public String list(@RequestParam(defaultValue = "1") int page, Model model) {
@@ -170,6 +175,17 @@ public class ProgramController {
 			return "redirect:/admin/programs/";
 		}
 
+	}
+
+	@GetMapping("/export/programs")
+	public void exportUsers(HttpServletResponse response) throws IOException {
+
+		List<Program> Programs = programService.GetList();
+
+		String[] headers = { "ID", "Title", "Country" };
+		String[] fields = { "id", "title", "country" };
+
+		excelService.exportToExcel(Programs, headers, fields, "Programs", response);
 	}
 
 }
